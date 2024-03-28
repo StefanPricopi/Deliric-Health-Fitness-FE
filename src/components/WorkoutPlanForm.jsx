@@ -26,7 +26,7 @@ const WorkoutPlanForm = ({ onSubmit, initialData, isUpdate }) => {
             durationInMinutes: exerciseDurationInMinutes,
             muscleGroup: exerciseMuscleGroup
         };
-        setExercises([...exercises, newExercise]);
+        setExercises(prevExercises => [...prevExercises, newExercise]);
         setExerciseName('');
         setExerciseDescription('');
         setExerciseDurationInMinutes(0);

@@ -1,16 +1,16 @@
+
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import WorkoutPlanForm from '../components/WorkoutPlanForm';
 import WorkoutPlanList from '../components/WorkoutPlanList';
-import { Link } from 'react-router-dom';
+import WorkoutPlanService from '../Api/WorkoutPlanService';
 
 const WorkoutPage = () => {
     const [workoutPlans, setWorkoutPlans] = useState([]);
 
     const refreshWorkoutPlans = () => {
-        axios.get("http://localhost:8080/workout-plans")
+        WorkoutPlanService.getAllWorkoutPlans()
             .then(result => {
-                setWorkoutPlans(result.data.workoutPlans);
+                setWorkoutPlans(result.workoutPlans); 
             })
             .catch(error => {
                 console.error("Error fetching workout plans:", error);
@@ -18,17 +18,15 @@ const WorkoutPage = () => {
     };
 
     const addWorkoutPlan = (newWorkoutPlan) => {
-        axios.post("http://localhost:8080/workout-plans", newWorkoutPlan)
+        WorkoutPlanService.addWorkoutPlan(newWorkoutPlan)
             .then(result => {
-                console.log("Workout plan added:", result.data);
-                refreshWorkoutPlans();
+                console.log("Workout plan added:", result);
+                
             })
             .catch(error => {
                 console.error("Error adding workout plan:", error);
             });
     };
-
-    
 
     useEffect(() => {
         refreshWorkoutPlans();
