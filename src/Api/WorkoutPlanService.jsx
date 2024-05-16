@@ -1,11 +1,11 @@
-import axios from 'axios';
+import api from './ApiService';
 
-const baseURL = 'http://localhost:8080/workout-plans';
+const baseURL = '/workout-plans';
 
 const WorkoutPlanService = {
     getAllWorkoutPlans: async () => {
         try {
-            const response = await axios.get(baseURL);
+            const response = await api.get(baseURL);
             return response.data;
         } catch (error) {
             throw new Error('Error fetching workout plans:', error);
@@ -13,7 +13,7 @@ const WorkoutPlanService = {
     },
     addWorkoutPlan: async (newWorkoutPlan) => {
         try {
-            const response = await axios.post(baseURL, newWorkoutPlan);
+            const response = await api.post(baseURL, newWorkoutPlan);
             return response.data;
         } catch (error) {
             throw new Error('Error adding workout plan:', error);
@@ -21,7 +21,7 @@ const WorkoutPlanService = {
     },
     fetchWorkout: async (id) => {
         try {
-            const response = await axios.get(`${baseURL}/${id}`);
+            const response = await api.get(`${baseURL}/${id}`);
             const { workoutPlans, error, errorMessage } = response.data;
 
             if (!error && workoutPlans.length > 0) {
@@ -38,7 +38,7 @@ const WorkoutPlanService = {
 
     deleteWorkout: async (id) => {
         try {
-            await axios.delete(`${baseURL}/${id}`);
+            await api.delete(`${baseURL}/${id}`);
             console.log('Workout deleted successfully');
             return true;
         } catch (error) {
@@ -46,11 +46,10 @@ const WorkoutPlanService = {
             return false;
         }
     },
-     
 
     updateWorkout: async (id, updatedWorkout) => {
         try {
-            await axios.put(`${baseURL}/${id}`, updatedWorkout);
+            await api.put(`${baseURL}/${id}`, updatedWorkout);
             console.log('Workout updated successfully');
             return true;
         } catch (error) {

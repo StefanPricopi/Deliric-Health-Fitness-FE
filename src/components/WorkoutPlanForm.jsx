@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const WorkoutPlanForm = ({ onSubmit, initialData, isUpdate, onAddExercise }) => {
+const WorkoutPlanForm = ({ onSubmit, initialData, isUpdate, onAddExercise, visible }) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [durationInDays, setDurationInDays] = useState(0);
@@ -30,7 +30,6 @@ const WorkoutPlanForm = ({ onSubmit, initialData, isUpdate, onAddExercise }) => 
     };
 
     const handleAddExercise = () => {
-        
         const errors = {};
         if (!exerciseName.trim()) {
             errors.name = 'Name is required';
@@ -46,7 +45,6 @@ const WorkoutPlanForm = ({ onSubmit, initialData, isUpdate, onAddExercise }) => 
         }
 
         if (Object.keys(errors).length === 0) {
-            
             const newExercise = {
                 name: exerciseName,
                 description: exerciseDescription,
@@ -54,22 +52,22 @@ const WorkoutPlanForm = ({ onSubmit, initialData, isUpdate, onAddExercise }) => 
                 muscleGroup: exerciseMuscleGroup
             };
             onAddExercise(newExercise);
-           
             setExerciseName('');
             setExerciseDescription('');
             setExerciseDurationInMinutes(0);
             setExerciseMuscleGroup('');
-            
             setExerciseValidationErrors({});
         } else {
-           
             setExerciseValidationErrors(errors);
         }
     };
 
+    if (!visible) {
+        return null;
+    }
+
     return (
         <form className="form-container" onSubmit={handleSubmit}>
-           
             <div>
                 <h3>Add Exercise</h3>
                 <input
@@ -102,7 +100,6 @@ const WorkoutPlanForm = ({ onSubmit, initialData, isUpdate, onAddExercise }) => 
                 <span>{exerciseValidationErrors.muscleGroup}</span>
                 <button type="button" onClick={handleAddExercise}>Add Exercise</button>
             </div>
-           
         </form>
     );
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAuth } from '../Context/AuthContext';
 import WorkoutPlanService from '../Api/WorkoutPlanService';
 import WorkoutPlanForm from '../components/WorkoutPlanForm';
 import ExerciseService from '../Api/ExerciseService';
@@ -8,6 +9,7 @@ const WorkoutPlanDetailPage = () => {
     const { id } = useParams();
     const [workout, setWorkout] = useState({ exercises: [] });
     const [loading, setLoading] = useState(true);
+    const { role } = useAuth();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,41 +26,34 @@ const WorkoutPlanDetailPage = () => {
     }, [id]);
 
     const handleAddExercise = async (newExercise) => {
-        // Add the new exercise to the current workout plan
         const updatedWorkout = { ...workout };
         updatedWorkout.exercises.push(newExercise);
         setWorkout(updatedWorkout);
-    
-        // Save the updated workout plan to the database
         await handleUpdateWorkout(updatedWorkout);
     };
-    
 
     const handleDeleteWorkout = async () => {
         const success = await WorkoutPlanService.deleteWorkout(id);
         if (success) {
-            window.location.href = 'http://localhost:5173';
+            window.location.href = '/';
         }
     };
 
     const handleUpdateWorkout = async (updatedWorkout) => {
         console.log('Updated Workout:', updatedWorkout);
-    
         const success = await WorkoutPlanService.updateWorkout(id, updatedWorkout);
         if (success) {
-            window.location.href = 'http://localhost:5173';
+            window.location.href = '/';
         }
     };
-    
 
     const handleRemoveExercise = async (exerciseId) => {
         const success = await ExerciseService.deleteExercise(exerciseId);
         if (success) {
-          
-          const updatedExercises = workout.exercises.filter(exercise => exercise.id !== exerciseId);
-          setWorkout({ ...workout, exercises: updatedExercises });
+            const updatedExercises = workout.exercises.filter(exercise => exercise.id !== exerciseId);
+            setWorkout({ ...workout, exercises: updatedExercises });
         }
-      };
+    };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -83,20 +78,25 @@ const WorkoutPlanDetailPage = () => {
                         <p>Description: {exercise.description}</p>
                         <p>Duration (in minutes): {exercise.durationInMinutes}</p>
                         <p>Muscle Group: {exercise.muscleGroup}</p>
-                        <button onClick={() => handleRemoveExercise(exercise.id)}>Remove Exercise</button>
+                        {role === 'PT' && (
+                            <button onClick={() => handleRemoveExercise(exercise.id)}>Remove Exercise</button>
+                        )}
                     </li>
                 ))}
             </ul>
-
-            <button onClick={handleDeleteWorkout}>Delete Workout</button>
+            {role === 'PT' && (
+                <>
+                    <button onClick={handleDeleteWorkout}>Delete Workout</button>
                     <WorkoutPlanForm
-            initialData={workout}
-            onSubmit={handleUpdateWorkout}
-            onAddExercise={handleAddExercise} 
-            mode="update"
-            submitButtonLabel="Update Workout"
-        />
-
+                        initialData={workout}
+                        onSubmit={handleUpdateWorkout}
+                        onAddExercise={handleAddExercise}
+                        mode="update"
+                        submitButtonLabel="Update Workout"
+                        visible={role === 'PT'}
+                    />
+                </>
+            )}
         </div>
     );
 };

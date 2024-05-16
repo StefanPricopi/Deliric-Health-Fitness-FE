@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-
-const CreateWorkoutPlanForm = ({ onSubmit }) => {
+const CreateWorkoutPlanForm = ({ onSubmit, visible }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [durationInDays, setDurationInDays] = useState('');
@@ -11,9 +10,13 @@ const CreateWorkoutPlanForm = ({ onSubmit }) => {
     onSubmit({
       name,
       description,
-      durationInDays: parseInt(durationInDays, 10) 
+      durationInDays: parseInt(durationInDays, 10)
     });
   };
+
+  if (!visible) {
+    return null;
+  }
 
   return (
     <div>

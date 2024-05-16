@@ -1,0 +1,27 @@
+.navbar {
+    background-color: #0a0a0a;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgb(180, 0, 0);
+}
+
+.navbar h1 {
+    margin: 0;
+}
+
+.navbar .links {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar .links a {
+    color: rgb(17, 1, 1);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar .links a:hover {
+    text-decoration: underline;
+}
