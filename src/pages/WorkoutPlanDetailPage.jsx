@@ -33,9 +33,12 @@ const WorkoutPlanDetailPage = () => {
     };
 
     const handleDeleteWorkout = async () => {
-        const success = await WorkoutPlanService.deleteWorkout(id);
-        if (success) {
-            window.location.href = '/';
+        const confirmation = window.confirm("Are you sure you want to delete this workout?");
+        if (confirmation) {
+            const success = await WorkoutPlanService.deleteWorkout(id);
+            if (success) {
+                window.location.href = '/';
+            }
         }
     };
 
@@ -48,10 +51,13 @@ const WorkoutPlanDetailPage = () => {
     };
 
     const handleRemoveExercise = async (exerciseId) => {
-        const success = await ExerciseService.deleteExercise(exerciseId);
-        if (success) {
-            const updatedExercises = workout.exercises.filter(exercise => exercise.id !== exerciseId);
-            setWorkout({ ...workout, exercises: updatedExercises });
+        const confirmation = window.confirm("Are you sure you want to remove this exercise?");
+        if (confirmation) {
+            const success = await ExerciseService.deleteExercise(exerciseId);
+            if (success) {
+                const updatedExercises = workout.exercises.filter(exercise => exercise.id !== exerciseId);
+                setWorkout({ ...workout, exercises: updatedExercises });
+            }
         }
     };
 
@@ -91,8 +97,7 @@ const WorkoutPlanDetailPage = () => {
                         initialData={workout}
                         onSubmit={handleUpdateWorkout}
                         onAddExercise={handleAddExercise}
-                        mode="update"
-                        submitButtonLabel="Update Workout"
+                        isUpdate={true}
                         visible={role === 'PT'}
                     />
                 </>

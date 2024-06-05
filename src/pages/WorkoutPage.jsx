@@ -3,21 +3,51 @@ import { useAuth } from '../Context/AuthContext';
 import CreateWorkoutPlanForm from '../components/CreateWorkoutPlanForm';
 import WorkoutPlanList from '../components/WorkoutPlanList';
 import WorkoutPlanService from '../Api/WorkoutPlanService';
+import { getAllPTs } from '../Api/AuthService';
 
 const WorkoutPage = () => {
     const [workoutPlans, setWorkoutPlans] = useState([]);
+    const [pts, setPts] = useState([]);
+    const [selectedPt, setSelectedPt] = useState('');
     const { role } = useAuth();
 
     useEffect(() => {
         refreshWorkoutPlans();
+        fetchPTs();
     }, []);
+
+    useEffect(() => {
+        if (selectedPt) {
+            fetchWorkoutPlansByPT(selectedPt);
+        } else {
+            refreshWorkoutPlans();
+        }
+    }, [selectedPt]);
 
     const refreshWorkoutPlans = async () => {
         try {
-            const plans = await WorkoutPlanService.getAllWorkoutPlans();
-            setWorkoutPlans(plans.workoutPlans);
+            const response = await WorkoutPlanService.getAllWorkoutPlans();
+            setWorkoutPlans(response.workoutPlans || []); // Ensure workoutPlans is always an array
         } catch (error) {
             console.error("Error fetching workout plans:", error);
+        }
+    };
+
+    const fetchWorkoutPlansByPT = async (ptId) => {
+        try {
+            const response = await WorkoutPlanService.getWorkoutPlansByPT(ptId);
+            setWorkoutPlans(response || []); // Ensure response is always an array
+        } catch (error) {
+            console.error("Error fetching workout plans by PT:", error);
+        }
+    };
+
+    const fetchPTs = async () => {
+        try {
+            const ptList = await getAllPTs();
+            setPts(ptList || []); // Ensure ptList is always an array
+        } catch (error) {
+            console.error("Error fetching PTs:", error);
         }
     };
 
@@ -30,10 +60,32 @@ const WorkoutPage = () => {
         }
     };
 
+    const handlePTChange = (e) => {
+        setSelectedPt(e.target.value);
+    };
+
+    const handleShowAllWorkouts = () => {
+        setSelectedPt('');
+        refreshWorkoutPlans();
+    };
+
     return (
         <div className="container">
             <div className="inner">
-                <CreateWorkoutPlanForm onSubmit={handleCreateWorkoutPlan} visible={role === 'PT'} />
+                {role === 'PT' && (
+                    <CreateWorkoutPlanForm onSubmit={handleCreateWorkoutPlan} visible={true} />
+                )}
+                <div>
+                    <button onClick={handleShowAllWorkouts}>Show All Workouts</button>
+                    <select value={selectedPt} onChange={handlePTChange}>
+                        <option value="">Select PT</option>
+                        {pts.map(pt => (
+                            <option key={pt.id} value={pt.id}>
+                                {pt.username}
+                            </option>
+                        ))}
+                    </select>
+                </div>
                 <WorkoutPlanList workoutPlans={workoutPlans} />
             </div>
         </div>

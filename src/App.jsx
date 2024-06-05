@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
+import Dashboard from './pages/Dashboard';
 
 const App = () => {
     console.log("App component rendering");
@@ -30,6 +31,11 @@ const App = () => {
                             <Route path="/workout/:id" element={
                                 <ProtectedRoute>
                                     <WorkoutPlanDetailPage />
+                                </ProtectedRoute>
+                            } />
+                            <Route path="/dashboard" element={
+                                <ProtectedRoute>
+                                    <Dashboard />
                                 </ProtectedRoute>
                             } />
                             <Route path="/login" element={<Login />} />

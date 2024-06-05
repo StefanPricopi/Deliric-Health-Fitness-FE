@@ -2,6 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const WorkoutPlanList = ({ workoutPlans }) => {
+    if (!Array.isArray(workoutPlans)) {
+        return <div>No workout plans available.</div>;
+    }
+
     return (
         <div>
             {workoutPlans.map(workoutPlan => (

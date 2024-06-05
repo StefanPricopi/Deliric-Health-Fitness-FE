@@ -14,6 +14,7 @@ const Login = () => {
             const response = await login(username, password);
             if (response.accessToken) {
                 localStorage.setItem('token', response.accessToken);
+                console.log('Token set in localStorage:', response.accessToken);
                 navigate('/workouts');
             } else {
                 setError('Invalid username or password');

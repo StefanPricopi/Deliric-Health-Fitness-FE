@@ -6,35 +6,42 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const { login: authLogin } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!username || !password) {
+            setError('All fields are required');
+            return;
+        }
         try {
             const response = await login(username, password);
             console.log('Login successful:', response);
 
             // Extract token and role from the response
-            const token = response.accessToken;  // Update this based on actual response structure
-            const role = response.role;  // Ensure this matches the structure of your response
+            const token = response.accessToken;  
+            const role = response.role;  
 
             if (!token || !role) {
                 throw new Error('Token or role is missing in the response');
             }
 
-            // Save token and role using AuthProvider's login method
+            
             authLogin(token, role);
 
-            // Redirect to the workouts page if the role is 'PT'
+            
             if (role === 'PT') {
                 navigate('/workouts');
             } else {
-                // Handle other roles or scenarios if necessary
+                
                 console.log('Role is not PT:', role);
             }
+            setError('');
         } catch (error) {
             console.error('Login failed:', error);
+            setError('Login failed. Please try again.');
         }
     };
 
@@ -48,6 +55,8 @@ const Login = () => {
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Enter your username"
+                        required
                     />
                 </div>
                 <div>
@@ -56,10 +65,13 @@ const Login = () => {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Enter your password"
+                        required
                     />
                 </div>
                 <button type="submit">Login</button>
             </form>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     );
 };
