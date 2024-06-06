@@ -26,7 +26,9 @@ const WorkoutPage = () => {
 
     const refreshWorkoutPlans = async () => {
         try {
+            console.log("Fetching all workout plans...");
             const response = await WorkoutPlanService.getAllWorkoutPlans();
+            console.log("Fetched workout plans:", response);
             setWorkoutPlans(response.workoutPlans || []); // Ensure workoutPlans is always an array
         } catch (error) {
             console.error("Error fetching workout plans:", error);
@@ -35,7 +37,9 @@ const WorkoutPage = () => {
 
     const fetchWorkoutPlansByPT = async (ptId) => {
         try {
+            console.log(`Fetching workout plans for PT with ID: ${ptId}`);
             const response = await WorkoutPlanService.getWorkoutPlansByPT(ptId);
+            console.log(`Fetched workout plans for PT ${ptId}:`, response);
             setWorkoutPlans(response || []); // Ensure response is always an array
         } catch (error) {
             console.error("Error fetching workout plans by PT:", error);
@@ -44,7 +48,9 @@ const WorkoutPage = () => {
 
     const fetchPTs = async () => {
         try {
+            console.log("Fetching all PTs...");
             const ptList = await getAllPTs();
+            console.log("Fetched PTs:", ptList);
             setPts(ptList || []); // Ensure ptList is always an array
         } catch (error) {
             console.error("Error fetching PTs:", error);
@@ -53,6 +59,7 @@ const WorkoutPage = () => {
 
     const handleCreateWorkoutPlan = async (newWorkoutPlan) => {
         try {
+            console.log("Creating new workout plan:", newWorkoutPlan);
             await WorkoutPlanService.addWorkoutPlan(newWorkoutPlan);
             refreshWorkoutPlans();
         } catch (error) {

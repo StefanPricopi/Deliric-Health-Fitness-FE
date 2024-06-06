@@ -1,0 +1,31 @@
+.workout-plan-card {
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.workout-plan-content h2 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.workout-plan-content p {
+    margin: 8px 0;
+}
+
+.details-link {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.details-link:hover {
+    background-color: #0056b3;
+}

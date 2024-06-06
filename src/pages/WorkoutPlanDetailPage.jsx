@@ -7,15 +7,22 @@ import ExerciseService from '../Api/ExerciseService';
 
 const WorkoutPlanDetailPage = () => {
     const { id } = useParams();
-    const [workout, setWorkout] = useState({ exercises: [] });
+    const [workout, setWorkout] = useState(null);
     const [loading, setLoading] = useState(true);
     const { role } = useAuth();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
+                console.log("Fetching workout with id:", id);
                 const fetchedWorkout = await WorkoutPlanService.fetchWorkout(id);
-                setWorkout({ ...fetchedWorkout, exercises: fetchedWorkout.exercises || [] });
+                console.log("Fetched workout data:", fetchedWorkout);
+                if (fetchedWorkout && !fetchedWorkout.error) {
+                    setWorkout(fetchedWorkout.workoutPlans[0]);
+                } else {
+                    console.error("Error:", fetchedWorkout.errorMessage);
+                    setWorkout(null);
+                }
             } catch (error) {
                 console.error('Error fetching workout data:', error);
                 setWorkout(null);
@@ -76,6 +83,7 @@ const WorkoutPlanDetailPage = () => {
             <p>Name: {workout.name}</p>
             <p>Description: {workout.description}</p>
             <p>Duration (in days): {workout.durationInDays}</p>
+            {workout.user && <p>Posted by: {workout.user.username}</p>}
             <h2>Exercises</h2>
             <ul>
                 {workout.exercises.map(exercise => (

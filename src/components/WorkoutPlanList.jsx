@@ -1,19 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import WorkoutPlanCard from './WorkoutPlanCard';
+import './WorkoutPlanList.css';
 
 const WorkoutPlanList = ({ workoutPlans }) => {
-    if (!Array.isArray(workoutPlans)) {
+    if (!Array.isArray(workoutPlans) || workoutPlans.length === 0) {
         return <div>No workout plans available.</div>;
     }
 
     return (
-        <div>
+        <div className="workout-plan-list">
             {workoutPlans.map(workoutPlan => (
-                <div key={workoutPlan.id}>
-                    <h2>{workoutPlan.name}</h2>
-                    <p>{workoutPlan.description}</p>
-                    <Link to={`/workout/${workoutPlan.id}`}>View Details</Link>
-                </div>
+                <WorkoutPlanCard key={workoutPlan.id} workoutPlan={workoutPlan} />
             ))}
         </div>
     );
