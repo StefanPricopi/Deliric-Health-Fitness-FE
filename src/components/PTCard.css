@@ -1,41 +1,42 @@
-.pt-card {
-    width: 200px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 16px;
-    margin: 8px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.pt-card img {
+/* PTCard.css */
+.pt-cards-container {
+    display: flex;
+    overflow: hidden;
+    position: relative;
     width: 100%;
-    height: auto;
-    border-radius: 50%;
+    align-items: center;
 }
 
-.pt-card-content {
-    margin-top: 8px;
+.pt-cards-wrapper {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
 }
 
-.pt-card-content h3 {
-    margin: 0;
-    font-size: 1.2em;
+.pt-card {
+    flex: 0 0 300px;
+    margin-right: 10px;
+    box-sizing: border-box;
 }
 
-.pt-card-content p {
-    margin: 8px 0;
-}
-
-.pt-card-content button {
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: white;
+.navigation-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.7);
     border: none;
-    border-radius: 4px;
     cursor: pointer;
+    z-index: 1;
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.pt-card-content button:hover {
-    background-color: #0056b3;
+.navigation-button.left {
+    left: 10px;
+}
+
+.navigation-button.right {
+    right: 10px;
 }

@@ -1,18 +1,21 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { setToken } from '../Api/AuthService'; // Import the setToken function
+import { setToken, decodeToken } from '../Api/AuthService';
 
-const AuthContext = createContext({ token: undefined, role: undefined, login: () => {}, logout: () => {} });
+const AuthContext = createContext({ token: undefined, user: undefined, role: undefined, login: () => {}, logout: () => {} });
 
 export const AuthProvider = ({ children }) => {
     const [authState, setAuthState] = useState({
         token: sessionStorage.getItem('token') || undefined,
+        user: sessionStorage.getItem('token') ? decodeToken(sessionStorage.getItem('token')) : undefined,
         role: sessionStorage.getItem('role') || undefined,
     });
 
     useEffect(() => {
         console.log("Auth state initialized:", authState);
         if (authState.token) {
-            setToken(authState.token); // Set the token in the AuthService
+            setToken(authState.token);
+            const user = decodeToken(authState.token);
+            setAuthState(prevState => ({ ...prevState, user }));
         }
     }, []);
 
@@ -21,18 +24,21 @@ export const AuthProvider = ({ children }) => {
         sessionStorage.setItem('token', authState.token);
         sessionStorage.setItem('role', authState.role);
         if (authState.token) {
-            setToken(authState.token); // Set the token in the AuthService
+            setToken(authState.token);
+            const user = decodeToken(authState.token);
+            setAuthState(prevState => ({ ...prevState, user }));
         }
-    }, [authState]);
+    }, [authState.token]);
 
     const login = (token, role) => {
         console.log("Login function called with token:", token);
-        setAuthState({ token, role });
+        const user = decodeToken(token);
+        setAuthState({ token, user, role });
     };
 
     const logout = () => {
         console.log("Logout function triggered");
-        setAuthState({ token: undefined, role: undefined });
+        setAuthState({ token: undefined, user: undefined, role: undefined });
         sessionStorage.clear();
     };
 
@@ -44,4 +50,4 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
-export { AuthContext }; // Ensure this is exported
+export { AuthContext };

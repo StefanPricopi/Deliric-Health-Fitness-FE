@@ -163,3 +163,18 @@ nav a {
 nav a:hover {
     text-decoration: underline;
 }
+
+.notifications {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    max-width: 300px;
+}
+
+.notification {
+    background-color: #444;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}

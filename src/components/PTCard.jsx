@@ -1,18 +1,22 @@
 import React from 'react';
 import './PTCard.css';
 
-const PTCard = ({ pt, onSubscribe }) => {
+const PTCard = ({ pt, onSubscribe, onUnsubscribe, isSubscribed }) => {
     return (
         <div className="pt-card">
             <img
-                src="src\assets\depositphotos_195522150-stock-illustration-default-placeholder-fitness-trainer-in.jpg"
+                src="src/assets/depositphotos_195522150-stock-illustration-default-placeholder-fitness-trainer-in.jpg"
                 alt={`${pt.username}'s profile`}
                 className="pt-card-image"
             />
             <div className="pt-card-content">
                 <h3>{pt.username}</h3>
                 <p>Workouts: {pt.workoutCount}</p>
-                <button onClick={() => onSubscribe(pt.id)}>Subscribe</button>
+                {isSubscribed ? (
+                    <button onClick={() => onUnsubscribe(pt.id)}>Unsubscribe</button>
+                ) : (
+                    <button onClick={() => onSubscribe(pt.id)}>Subscribe</button>
+                )}
             </div>
         </div>
     );
