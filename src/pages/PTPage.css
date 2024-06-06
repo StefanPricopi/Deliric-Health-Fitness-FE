@@ -1,0 +1,26 @@
+.pt-page {
+    padding: 20px;
+}
+
+.pt-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.pt-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+}
+
+.pt-card h3 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.pt-card p {
+    margin: 10px 0;
+}

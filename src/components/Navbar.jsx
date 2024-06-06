@@ -22,6 +22,7 @@ const Navbar = () => {
                     <>
                         <Link to="/workouts">Workouts</Link>
                         {role === 'PT' && <Link to="/dashboard">Dashboard</Link>}
+                        <Link to="/pts">PTs</Link>  {/* Add the link to PTsPage */}
                         <button onClick={handleLogout}>Logout</button>
                     </>
                 )}

@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
+import PTsPage from './pages/PTsPage'; 
 
 const App = () => {
     console.log("App component rendering");
@@ -36,6 +37,11 @@ const App = () => {
                             <Route path="/dashboard" element={
                                 <ProtectedRoute>
                                     <Dashboard />
+                                </ProtectedRoute>
+                            } />
+                            <Route path="/pts" element={
+                                <ProtectedRoute>
+                                    <PTsPage />
                                 </ProtectedRoute>
                             } />
                             <Route path="/login" element={<Login />} />
