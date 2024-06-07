@@ -33,37 +33,68 @@ const WorkoutPlanDetailPage = () => {
     }, [id]);
 
     const handleAddExercise = async (newExercise) => {
-        const updatedWorkout = { ...workout };
-        updatedWorkout.exercises.push(newExercise);
-        setWorkout(updatedWorkout);
-        await handleUpdateWorkout(updatedWorkout);
+        try {
+            const updatedWorkout = { ...workout };
+            updatedWorkout.exercises.push(newExercise);
+            setWorkout(updatedWorkout);
+            await handleUpdateWorkout(updatedWorkout);
+        } catch (error) {
+            alert('Sorry, you are not allowed to change this information.');
+        }
     };
 
     const handleDeleteWorkout = async () => {
-        const confirmation = window.confirm("Are you sure you want to delete this workout?");
-        if (confirmation) {
-            const success = await WorkoutPlanService.deleteWorkout(id);
-            if (success) {
-                window.location.href = '/';
+        try {
+            const confirmation = window.confirm("Are you sure you want to delete this workout?");
+            if (confirmation) {
+                const success = await WorkoutPlanService.deleteWorkout(id);
+                if (success) {
+                    window.location.href = '/';
+                }
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                alert('Sorry, you are not allowed to change this information.');
+            } else {
+                console.error('Error deleting workout:', error);
+                alert('An error occurred while deleting the workout.');
             }
         }
     };
 
     const handleUpdateWorkout = async (updatedWorkout) => {
-        console.log('Updated Workout:', updatedWorkout);
-        const success = await WorkoutPlanService.updateWorkout(id, updatedWorkout);
-        if (success) {
-            window.location.href = '/';
+        try {
+            console.log('Updated Workout:', updatedWorkout);
+            const success = await WorkoutPlanService.updateWorkout(id, updatedWorkout);
+            if (success) {
+                window.location.href = '/';
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                alert('Sorry, you are not allowed to change this information.');
+            } else {
+                console.error('Error updating workout:', error);
+                alert('An error occurred while updating the workout.');
+            }
         }
     };
 
     const handleRemoveExercise = async (exerciseId) => {
-        const confirmation = window.confirm("Are you sure you want to remove this exercise?");
-        if (confirmation) {
-            const success = await ExerciseService.deleteExercise(exerciseId);
-            if (success) {
-                const updatedExercises = workout.exercises.filter(exercise => exercise.id !== exerciseId);
-                setWorkout({ ...workout, exercises: updatedExercises });
+        try {
+            const confirmation = window.confirm("Are you sure you want to remove this exercise?");
+            if (confirmation) {
+                const success = await ExerciseService.deleteExercise(exerciseId);
+                if (success) {
+                    const updatedExercises = workout.exercises.filter(exercise => exercise.id !== exerciseId);
+                    setWorkout({ ...workout, exercises: updatedExercises });
+                }
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                alert('Sorry, you are not allowed to change this information.');
+            } else {
+                console.error('Error removing exercise:', error);
+                alert('An error occurred while removing the exercise.');
             }
         }
     };
