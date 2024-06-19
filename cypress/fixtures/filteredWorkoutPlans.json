@@ -1,0 +1,13 @@
+{
+    "workoutPlans": [
+      {
+        "id": 3,
+        "name": "Workout 3",
+        "description": "Description 3",
+        "user": {
+          "username": "pt3"
+        }
+      }
+    ]
+  }
+  

@@ -10,19 +10,27 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!username || !password) {
+            setError('All fields are required');
+            console.log('Error: All fields are required'); // Debug log
+            return;
+        }
         try {
             const response = await login(username, password);
             if (response.accessToken) {
                 localStorage.setItem('token', response.accessToken);
-                console.log('Token set in localStorage:', response.accessToken);
                 navigate('/workouts');
             } else {
                 setError('Invalid username or password');
+                console.log('Error: Invalid username or password'); // Debug log
             }
         } catch (err) {
-            setError('Failed to login');
+            setError('Login failed. Please try again.');
+            console.log('Error: Login failed. Please try again.'); // Debug log
         }
     };
+
+    console.log('Rendering Login Component'); // Debug log
 
     return (
         <div className="login-page">
@@ -34,6 +42,7 @@ const Login = () => {
                     <input
                         type="text"
                         id="username"
+                        name="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
@@ -44,6 +53,7 @@ const Login = () => {
                     <input
                         type="password"
                         id="password"
+                        name="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required

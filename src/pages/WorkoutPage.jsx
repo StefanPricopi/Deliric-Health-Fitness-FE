@@ -40,7 +40,7 @@ const WorkoutPage = () => {
             console.log(`Fetching workout plans for PT with ID: ${ptId}`);
             const response = await WorkoutPlanService.getWorkoutPlansByPT(ptId);
             console.log(`Fetched workout plans for PT ${ptId}:`, response);
-            setWorkoutPlans(response || []); // Ensure response is always an array
+            setWorkoutPlans(response.workoutPlans || []); // Ensure response is always an array
         } catch (error) {
             console.error("Error fetching workout plans by PT:", error);
         }
