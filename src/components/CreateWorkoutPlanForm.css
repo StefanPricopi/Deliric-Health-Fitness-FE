@@ -1,0 +1,58 @@
+.create-workout-form {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: #FFFACD;
+    width: 100%;
+    max-width: 500px;
+    
+}
+
+.create-workout-form h2 {
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.error {
+    color: red;
+    font-size: 0.9em;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.submit-button, .cancel-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #2f4f4f;
+    color: #FFFACD;
+}
+
+.cancel-button {
+    background-color: #dc3545;
+}
+
+.submit-button:hover, .cancel-button:hover {
+    opacity: 0.8;
+}

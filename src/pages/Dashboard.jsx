@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../Context/AuthContext';
 import ChartComponent from '../components/ChartComponent';  // Correct import
+import Navbar from '../components/Navbar';
+import './Dashboard.css';
+import dashboardBackground from '../assets/dashboardBackground.webp';
 
 const Dashboard = () => {
     const { token } = useAuth();
@@ -15,14 +18,13 @@ const Dashboard = () => {
                 });
                 console.log('API response:', response.data);
 
-                // Check if response.data is a string and parse it if necessary
                 const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
                 console.log('Parsed data:', data);
 
-                setWorkoutCounts(data);  // Set the fetched data
+                setWorkoutCounts(data);  
             } catch (error) {
                 console.error('Error fetching workout counts:', error);
-                setWorkoutCounts([]);  // Set to empty array on error
+                setWorkoutCounts([]);  
             }
         };
 
@@ -30,9 +32,17 @@ const Dashboard = () => {
     }, [token]);
 
     return (
-        <div>
-            <h2>Dashboard</h2>
-            <ChartComponent data={workoutCounts} />  {/* Pass workoutCounts as data prop */}
+        <div className="dashboard-page" style={{ backgroundImage: `url(${dashboardBackground})` }}>
+            <Navbar />
+            <div className="content-wrapper">
+                <h2>Dashboard</h2>
+                <div className="chart-container">
+                    <ChartComponent data={workoutCounts} />  {}
+                </div>
+            </div>
+            <footer className="footer">
+                &copy; 2024 Delirium Health & Fitness
+            </footer>
         </div>
     );
 };

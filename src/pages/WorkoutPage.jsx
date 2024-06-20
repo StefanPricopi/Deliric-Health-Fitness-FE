@@ -4,6 +4,9 @@ import CreateWorkoutPlanForm from '../components/CreateWorkoutPlanForm';
 import WorkoutPlanList from '../components/WorkoutPlanList';
 import WorkoutPlanService from '../Api/WorkoutPlanService';
 import { getAllPTs } from '../Api/AuthService';
+import Navbar from '../components/Navbar';
+import backgroundWorkouts from '../assets/backgroundWorkouts.jpg';
+import './WorkoutPage.css';
 
 const WorkoutPage = () => {
     const [workoutPlans, setWorkoutPlans] = useState([]);
@@ -29,7 +32,11 @@ const WorkoutPage = () => {
             console.log("Fetching all workout plans...");
             const response = await WorkoutPlanService.getAllWorkoutPlans();
             console.log("Fetched workout plans:", response);
-            setWorkoutPlans(response.workoutPlans || []); // Ensure workoutPlans is always an array
+            if (response && response.workoutPlans) {
+                setWorkoutPlans(response.workoutPlans); // Ensure workoutPlans is always an array
+            } else {
+                setWorkoutPlans([]);
+            }
         } catch (error) {
             console.error("Error fetching workout plans:", error);
         }
@@ -40,7 +47,11 @@ const WorkoutPage = () => {
             console.log(`Fetching workout plans for PT with ID: ${ptId}`);
             const response = await WorkoutPlanService.getWorkoutPlansByPT(ptId);
             console.log(`Fetched workout plans for PT ${ptId}:`, response);
-            setWorkoutPlans(response.workoutPlans || []); // Ensure response is always an array
+            if (Array.isArray(response)) {
+                setWorkoutPlans(response); // Ensure response is always an array
+            } else {
+                setWorkoutPlans([]);
+            }
         } catch (error) {
             console.error("Error fetching workout plans by PT:", error);
         }
@@ -76,15 +87,23 @@ const WorkoutPage = () => {
         refreshWorkoutPlans();
     };
 
+    useEffect(() => {
+        document.body.classList.add('scrollable-page');
+        return () => {
+            document.body.classList.remove('scrollable-page');
+        };
+    }, []);
+
     return (
-        <div className="container">
-            <div className="inner">
+        <div className="workout-page" style={{ backgroundImage: `url(${backgroundWorkouts})` }}>
+            <Navbar />
+            <div className="content-wrapper">
                 {role === 'PT' && (
                     <CreateWorkoutPlanForm onSubmit={handleCreateWorkoutPlan} visible={true} />
                 )}
-                <div>
-                    <button onClick={handleShowAllWorkouts}>Show All Workouts</button>
-                    <select value={selectedPt} onChange={handlePTChange}>
+                <div className="filter-container">
+                    <button className="filter-button" onClick={handleShowAllWorkouts}>Show All Workouts</button>
+                    <select className="filter-select" value={selectedPt} onChange={handlePTChange}>
                         <option value="">Select PT</option>
                         {pts.map(pt => (
                             <option key={pt.id} value={pt.id}>
@@ -95,6 +114,9 @@ const WorkoutPage = () => {
                 </div>
                 <WorkoutPlanList workoutPlans={workoutPlans} />
             </div>
+            <footer className="footer">
+                &copy; 2024 Delirium Health & Fitness
+            </footer>
         </div>
     );
 };

@@ -4,6 +4,8 @@ import { useAuth } from '../Context/AuthContext';
 import WorkoutPlanService from '../Api/WorkoutPlanService';
 import WorkoutPlanForm from '../components/WorkoutPlanForm';
 import ExerciseService from '../Api/ExerciseService';
+import Navbar from '../components/Navbar';
+import './WorkoutPlanDetailPage.css';
 
 const WorkoutPlanDetailPage = () => {
     const { id } = useParams();
@@ -108,39 +110,47 @@ const WorkoutPlanDetailPage = () => {
     }
 
     return (
-        <div>
-            <h1>Workout Details</h1>
-            <p>Workout ID: {workout.id}</p>
-            <p>Name: {workout.name}</p>
-            <p>Description: {workout.description}</p>
-            <p>Duration (in days): {workout.durationInDays}</p>
-            {workout.user && <p>Posted by: {workout.user.username}</p>}
-            <h2>Exercises</h2>
-            <ul>
-                {workout.exercises.map(exercise => (
-                    <li key={exercise.id}>
-                        <p>Name: {exercise.name}</p>
-                        <p>Description: {exercise.description}</p>
-                        <p>Duration (in minutes): {exercise.durationInMinutes}</p>
-                        <p>Muscle Group: {exercise.muscleGroup}</p>
-                        {role === 'PT' && (
-                            <button onClick={() => handleRemoveExercise(exercise.id)}>Remove Exercise</button>
-                        )}
-                    </li>
-                ))}
-            </ul>
-            {role === 'PT' && (
-                <>
-                    <button onClick={handleDeleteWorkout}>Delete Workout</button>
-                    <WorkoutPlanForm
-                        initialData={workout}
-                        onSubmit={handleUpdateWorkout}
-                        onAddExercise={handleAddExercise}
-                        isUpdate={true}
-                        visible={role === 'PT'}
-                    />
-                </>
-            )}
+        <div className="workout-detail-page">
+            <Navbar />
+            <div className="content-wrapper">
+                <div className="workout-card">
+                    <h1>Workout Details</h1>
+                    <p>Workout ID: {workout.id}</p>
+                    <p>Name: {workout.name}</p>
+                    <p>Description: {workout.description}</p>
+                    <p>Duration (in days): {workout.durationInDays}</p>
+                    {workout.user && <p>Posted by: {workout.user.username}</p>}
+                    <h2>Exercises</h2>
+                    <ul>
+                        {workout.exercises.map(exercise => (
+                            <li key={exercise.id}>
+                                <p>Name: {exercise.name}</p>
+                                <p>Description: {exercise.description}</p>
+                                <p>Duration (in minutes): {exercise.durationInMinutes}</p>
+                                <p>Muscle Group: {exercise.muscleGroup}</p>
+                                {role === 'PT' && (
+                                    <button className="remove-exercise-button" onClick={() => handleRemoveExercise(exercise.id)}>Remove Exercise</button>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                    {role === 'PT' && (
+                        <>
+                            <button className="delete-workout-button" onClick={handleDeleteWorkout}>Delete Workout</button>
+                            <WorkoutPlanForm
+                                initialData={workout}
+                                onSubmit={handleUpdateWorkout}
+                                onAddExercise={handleAddExercise}
+                                isUpdate={true}
+                                visible={role === 'PT'}
+                            />
+                        </>
+                    )}
+                </div>
+            </div>
+            <footer className="footer">
+                &copy; 2024 Delirium Health & Fitness
+            </footer>
         </div>
     );
 };

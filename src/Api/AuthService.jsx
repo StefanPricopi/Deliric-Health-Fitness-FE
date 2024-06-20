@@ -61,7 +61,7 @@ export const getAllPTs = async () => {
 };
 
 export const checkUsername = (username) => {
-    return axios.get('/api/check-username', { params: { username } });
+    return axios.get(`${API_URL}/check-username`, { params: { username } });
 };
 
 const base64UrlToJson = (base64Url) => {

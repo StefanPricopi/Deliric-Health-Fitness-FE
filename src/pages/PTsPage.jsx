@@ -5,7 +5,9 @@ import { useAuth } from '../Context/AuthContext';
 import WebSocketService from '../Api/WebSocketService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Navbar from '../components/Navbar';
 import './PTPage.css';
+import ptBackground from '../assets/ptBackground.jpg';
 
 const PTsPage = () => {
     const [pts, setPTs] = useState([]);
@@ -98,24 +100,30 @@ const PTsPage = () => {
     };
 
     return (
-        <div className="pt-page">
-            <h1>Personal Trainers</h1>
-            <div className="pt-carousel">
-                <button className="carousel-button left" onClick={scrollLeft}>&lt;</button>
-                <div className="pt-cards">
-                    {pts.map(pt => (
-                        <PTCard
-                            key={pt.id}
-                            pt={pt}
-                            onSubscribe={handleSubscribe}
-                            onUnsubscribe={handleUnsubscribe}
-                            isSubscribed={subscriptions.includes(pt.id)}
-                        />
-                    ))}
+        <div className="pt-page" style={{ backgroundImage: `url(${ptBackground})` }}>
+            <Navbar />
+            <div className="content-wrapper">
+                <h1>Personal Trainers</h1>
+                <div className="pt-carousel">
+                    <button className="carousel-button left" onClick={scrollLeft}>&lt;</button>
+                    <div className="pt-cards">
+                        {pts.map(pt => (
+                            <PTCard
+                                key={pt.id}
+                                pt={pt}
+                                onSubscribe={handleSubscribe}
+                                onUnsubscribe={handleUnsubscribe}
+                                isSubscribed={subscriptions.includes(pt.id)}
+                            />
+                        ))}
+                    </div>
+                    <button className="carousel-button right" onClick={scrollRight}>&gt;</button>
                 </div>
-                <button className="carousel-button right" onClick={scrollRight}>&gt;</button>
+                <ToastContainer />
             </div>
-            <ToastContainer />
+            <footer className="footer">
+                &copy; 2024 Delirium Health & Fitness
+            </footer>
         </div>
     );
 };

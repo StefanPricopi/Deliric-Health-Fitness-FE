@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useAuth } from '../Context/AuthContext';
 import { login } from '../Api/AuthService';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import loginPageBackground from '../assets/loginPageBackground.jpg';
+import './Login.css';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -28,14 +31,11 @@ const Login = () => {
                 throw new Error('Token or role is missing in the response');
             }
 
-            
             authLogin(token, role);
 
-            
             if (role === 'PT') {
                 navigate('/workouts');
             } else {
-                
                 console.log('Role is not PT:', role);
             }
             setError('');
@@ -46,32 +46,40 @@ const Login = () => {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Username:</label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        placeholder="Enter your username"
-                        required
-                    />
+        <div className="login-page" style={{ backgroundImage: `url(${loginPageBackground})` }}>
+            <Navbar />
+            <div className="login-form-wrapper">
+                <div className="login-form-container">
+                    <h2>Login</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label>Username:</label>
+                            <input
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="Enter your username"
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Password:</label>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Enter your password"
+                                required
+                            />
+                        </div>
+                        <button type="submit">Login</button>
+                    </form>
+                    {error && <p className="error">{error}</p>}
                 </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Enter your password"
-                        required
-                    />
-                </div>
-                <button type="submit">Login</button>
-            </form>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            </div>
+            <footer className="footer">
+                &copy; 2024 Delirium Health & Fitness
+            </footer>
         </div>
     );
 };

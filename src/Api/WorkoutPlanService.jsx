@@ -20,6 +20,7 @@ const WorkoutPlanService = {
     getAllWorkoutPlans: async () => {
         try {
             const response = await api.get(baseURL, getAuthHeaders());
+            console.log("Response from getAllWorkoutPlans:", response.data);
             return response.data;
         } catch (error) {
             throw new Error('Error fetching workout plans:', error);
@@ -28,6 +29,7 @@ const WorkoutPlanService = {
     getWorkoutPlansByPT: async (ptId) => {
         try {
             const response = await api.get(`${baseURL}/by-pt/${ptId}`, getAuthHeaders());
+            console.log(`Response from getWorkoutPlansByPT (${ptId}):`, response.data);
             return response.data;
         } catch (error) {
             throw new Error('Error fetching workout plans by PT:', error);

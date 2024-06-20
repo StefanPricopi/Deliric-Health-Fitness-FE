@@ -1,8 +1,10 @@
+// LoginForm.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../Api/AuthService';
+import './LoginForm.css'; 
 
-const Login = () => {
+const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -12,7 +14,7 @@ const Login = () => {
         e.preventDefault();
         if (!username || !password) {
             setError('All fields are required');
-            console.log('Error: All fields are required'); // Debug log
+            console.log('Error: All fields are required'); 
             return;
         }
         try {
@@ -22,22 +24,22 @@ const Login = () => {
                 navigate('/workouts');
             } else {
                 setError('Invalid username or password');
-                console.log('Error: Invalid username or password'); // Debug log
+                console.log('Error: Invalid username or password'); 
             }
         } catch (err) {
             setError('Login failed. Please try again.');
-            console.log('Error: Login failed. Please try again.'); // Debug log
+            console.log('Error: Login failed. Please try again.'); 
         }
     };
 
-    console.log('Rendering Login Component'); // Debug log
+    console.log('Rendering Login Component'); 
 
     return (
-        <div className="login-page">
+        <div className="login-form-container">
             <h2>Login</h2>
             {error && <p className="error">{error}</p>}
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="form-group">
                     <label htmlFor="username">Username</label>
                     <input
                         type="text"
@@ -48,7 +50,7 @@ const Login = () => {
                         required
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"
@@ -65,4 +67,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default LoginForm;

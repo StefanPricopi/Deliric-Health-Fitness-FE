@@ -1,42 +1,36 @@
-/* PTCard.css */
-.pt-cards-container {
-    display: flex;
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    align-items: center;
-}
-
-.pt-cards-wrapper {
-    display: flex;
-    transition: transform 0.3s ease-in-out;
-}
-
 .pt-card {
     flex: 0 0 300px;
     margin-right: 10px;
     box-sizing: border-box;
+    background-color: rgba(47, 79, 79, 1);
+    border-radius: 8px;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
 }
 
-.navigation-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.7);
-    border: none;
-    cursor: pointer;
-    z-index: 1;
-    padding: 0.5rem;
+.pt-card img {
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 10px;
 }
 
-.navigation-button.left {
-    left: 10px;
+.pt-card h3 {
+    color: #FFFACD;
+    margin-bottom: 10px;
 }
 
-.navigation-button.right {
-    right: 10px;
+.pt-card button {
+    background-color: #2f4f4f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pt-card button:hover {
+    background-color: #96e7ae;
 }

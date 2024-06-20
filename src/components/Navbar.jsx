@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
+import logo from '../assets/logo.png'; // Make sure the path to your logo image is correct
+import './Navbar.css'; // Ensure you have a separate CSS file for Navbar styling
 
 const Navbar = () => {
     const { token, role, logout } = useAuth();
@@ -11,22 +13,19 @@ const Navbar = () => {
         navigate('/');
     };
 
-    console.log("Navbar rendered with token:", token);
-
     return (
         <nav className="navbar">
-            <h1>Delirium Health & Fitness</h1>
+            <img src={logo} alt="Delirium Health & Fitness Logo" className="logo" />
             <div className="links">
                 <Link to="/">Home</Link>
-                {token && (
+                {token ? (
                     <>
                         <Link to="/workouts">Workouts</Link>
                         {role === 'PT' && <Link to="/dashboard">Dashboard</Link>}
-                        <Link to="/pts">PTs</Link>  {/* Add the link to PTsPage */}
-                        <button onClick={handleLogout}>Logout</button>
+                        <Link to="/pts">PTs</Link>
+                        <button className='logout-button' onClick={handleLogout}>Logout</button>
                     </>
-                )}
-                {!token && (
+                ) : (
                     <>
                         <Link to="/login">Login</Link>
                         <Link to="/register">Register</Link>

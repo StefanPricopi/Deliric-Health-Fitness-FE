@@ -3,6 +3,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 16px;
+    margin-top: 5%;
 }
 
 .workout-plan-card {
@@ -26,7 +27,7 @@
 
 .details-link {
     padding: 8px 16px;
-    background-color: #007bff;
+    background-color: #2f4f4f;
     color: white;
     border: none;
     border-radius: 4px;
@@ -34,5 +35,5 @@
 }
 
 .details-link:hover {
-    background-color: #0056b3;
+    background-color: #96e7ae;
 }

@@ -10,7 +10,7 @@ const ChartComponent = ({ data }) => {
 
     console.log('ChartComponent data:', data);
 
-    // Check if data is an array, if not, set it to an empty array
+    
     const chartData = Array.isArray(data) ? data : [];
 
     const chartConfig = {
@@ -19,23 +19,35 @@ const ChartComponent = ({ data }) => {
             {
                 label: 'Workout Count',
                 data: chartData.map(item => item.workoutCount),
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(255, 215, 0, 0.7)', 
+                borderColor: 'rgba(255, 165, 0, 1)', 
                 borderWidth: 1,
             },
         ],
     };
 
     const options = {
+        maintainAspectRatio: false, 
         scales: {
             x: {
                 ticks: {
                     maxRotation: 90,
                     minRotation: 45,
+                    color: '#FFFACD', 
                 },
             },
             y: {
                 beginAtZero: true,
+                ticks: {
+                    color: '#FFFACD', 
+                },
+            },
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#FFFACD', 
+                },
             },
         },
     };
@@ -49,20 +61,24 @@ const ChartComponent = ({ data }) => {
         };
     }, []);
 
-    return <Bar ref={chartRef} data={chartConfig} options={options} />;
+    return (
+        <div style={{ width: '100%', height: '100%' }}>
+            <Bar ref={chartRef} data={chartConfig} options={options} />
+        </div>
+    );
 };
 
 ChartComponent.propTypes = {
     data: PropTypes.arrayOf(
         PropTypes.shape({
             userId: PropTypes.number.isRequired,
-            workoutCount: PropTypes.number.isRequired
+            workoutCount: PropTypes.number.isRequired,
         })
-    ).isRequired
+    ).isRequired,
 };
 
 ChartComponent.defaultProps = {
-    data: []
+    data: [],
 };
 
 export default ChartComponent;

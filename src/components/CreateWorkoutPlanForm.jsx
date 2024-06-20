@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../Context/AuthContext';
+import './CreateWorkoutPlanForm.css';
 
 // Function to decode JWT without using a library
 const parseJwt = (token) => {
@@ -93,10 +94,10 @@ const CreateWorkoutPlanForm = ({ onSubmit, visible }) => {
     }
 
     return (
-        <div>
+        <div className="create-workout-form">
             <h2>Add Workout</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="form-group">
                     <label htmlFor="name">Workout Name:</label>
                     <input
                         id="name"
@@ -105,9 +106,9 @@ const CreateWorkoutPlanForm = ({ onSubmit, visible }) => {
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
-                    {errors.name && <p style={{ color: 'red' }}>{errors.name}</p>}
+                    {errors.name && <p className="error">{errors.name}</p>}
                 </div>
-                <div>
+                <div className="form-group">
                     <label htmlFor="description">Description:</label>
                     <textarea
                         id="description"
@@ -115,9 +116,9 @@ const CreateWorkoutPlanForm = ({ onSubmit, visible }) => {
                         onChange={(e) => setDescription(e.target.value)}
                         required
                     />
-                    {errors.description && <p style={{ color: 'red' }}>{errors.description}</p>}
+                    {errors.description && <p className="error">{errors.description}</p>}
                 </div>
-                <div>
+                <div className="form-group">
                     <label htmlFor="durationInDays">Duration (Days):</label>
                     <input
                         id="durationInDays"
@@ -126,10 +127,12 @@ const CreateWorkoutPlanForm = ({ onSubmit, visible }) => {
                         onChange={(e) => setDurationInDays(e.target.value)}
                         required
                     />
-                    {errors.durationInDays && <p style={{ color: 'red' }}>{errors.durationInDays}</p>}
+                    {errors.durationInDays && <p className="error">{errors.durationInDays}</p>}
                 </div>
-                <button type="submit">Create Workout</button>
-                <button type="button" onClick={handleCancel}>Cancel</button>
+                <div className="button-group">
+                    <button type="submit" className="submit-button">Create Workout</button>
+                    <button type="button" className="cancel-button" onClick={handleCancel}>Cancel</button>
+                </div>
             </form>
         </div>
     );

@@ -1,5 +1,4 @@
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider, useAuth } from './Context/AuthContext';
 import Home from './pages/Home';
@@ -7,13 +6,13 @@ import WorkoutPage from './pages/WorkoutPage';
 import WorkoutPlanDetailPage from './pages/WorkoutPlanDetailPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 import PTsPage from './pages/PTsPage';
 import WebSocketService from './Api/WebSocketService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 
 const AppContent = () => {
     const { token } = useAuth();
@@ -45,9 +44,6 @@ const AppContent = () => {
 
     return (
         <div className="App">
-            <header>
-                <Navbar />
-            </header>
             <main>
                 <Routes>
                     <Route path="/" element={<Home />} />
@@ -75,9 +71,6 @@ const AppContent = () => {
                     <Route path="/register" element={<Register />} />
                 </Routes>
             </main>
-            <footer>
-                <p>© 2024 Delirium Health & Fitness</p>
-            </footer>
             <ToastContainer />
         </div>
     );
