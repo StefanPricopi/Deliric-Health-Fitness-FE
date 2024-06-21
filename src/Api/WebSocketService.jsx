@@ -7,6 +7,7 @@ class WebSocketService {
         this.connected = false;
         this.connectCallback = null;
         this.errorCallback = null;
+        this.pendingMessages = [];
     }
 
     connect(onConnected, onError) {
@@ -17,6 +18,10 @@ class WebSocketService {
 
         this.stompClient.connect({}, () => {
             this.connected = true;
+            this.pendingMessages.forEach(({ topic, message }) => {
+                this.send(topic, message);
+            });
+            this.pendingMessages = [];
             if (this.connectCallback) this.connectCallback();
         }, () => {
             this.connected = false;
@@ -46,9 +51,8 @@ class WebSocketService {
             this.stompClient.send(topic, {}, JSON.stringify(message));
         } else {
             console.error('WebSocket is not connected');
-            this.connect(() => {
-                this.stompClient.send(topic, {}, JSON.stringify(message));
-            }, this.errorCallback);
+            this.pendingMessages.push({ topic, message });
+            this.connect(this.connectCallback, this.errorCallback);
         }
     }
 

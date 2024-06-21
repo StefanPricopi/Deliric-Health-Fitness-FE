@@ -1,10 +1,11 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './WorkoutPlanCard.css';
 
 const WorkoutPlanCard = ({ workoutPlan }) => {
     console.log('Rendering WorkoutPlanCard for plan:', workoutPlan);
-    
+
     return (
         <div className="workout-plan-card">
             <div className="workout-plan-content">

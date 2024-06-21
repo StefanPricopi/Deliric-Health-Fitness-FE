@@ -49,6 +49,8 @@ const WorkoutPage = () => {
             console.log(`Fetched workout plans for PT ${ptId}:`, response);
             if (Array.isArray(response)) {
                 setWorkoutPlans(response); // Ensure response is always an array
+            } else if (response && response.workoutPlans) {
+                setWorkoutPlans(response.workoutPlans); // Ensure response contains workoutPlans array
             } else {
                 setWorkoutPlans([]);
             }
@@ -79,6 +81,7 @@ const WorkoutPage = () => {
     };
 
     const handlePTChange = (e) => {
+        console.log(`Selected PT: ${e.target.value}`);
         setSelectedPt(e.target.value);
     };
 

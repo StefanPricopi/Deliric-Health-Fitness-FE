@@ -1,6 +1,5 @@
 {
-    "subscriptions": [
-      { "ptId": "pt123456" }
-    ]
-  }
-  
+  "subscriptions": [
+      { "ptId": 9 }
+  ]
+}

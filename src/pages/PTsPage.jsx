@@ -28,10 +28,15 @@ const PTsPage = () => {
             try {
                 if (user && user.userId) {
                     const response = await getUserSubscriptions(user.userId);
-                    setSubscriptions(response);
+                    if (response && Array.isArray(response.subscriptions)) {
+                        setSubscriptions(response.subscriptions.map(sub => sub.ptId));
+                    } else {
+                        setSubscriptions([]);
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching subscriptions:', error);
+                setSubscriptions([]);
             }
         };
 

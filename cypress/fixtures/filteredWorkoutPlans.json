@@ -1,13 +1,16 @@
-{
-    "workoutPlans": [
-      {
-        "id": 3,
-        "name": "Workout 3",
-        "description": "Description 3",
-        "user": {
-          "username": "pt3"
-        }
+[
+  {
+      "id": 30108,
+      "name": "1",
+      "description": "1",
+      "durationInDays": 1,
+      "exercises": [],
+      "user": {
+          "id": 9,
+          "username": "pt3",
+          "email": "test3@gmail.com",
+          "password": null,
+          "roles": "PT"
       }
-    ]
   }
-  
+]

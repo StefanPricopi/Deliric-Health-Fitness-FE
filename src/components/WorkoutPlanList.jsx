@@ -1,3 +1,4 @@
+
 import React from 'react';
 import WorkoutPlanCard from './WorkoutPlanCard';
 import './WorkoutPlanList.css';
@@ -19,3 +20,4 @@ const WorkoutPlanList = ({ workoutPlans }) => {
 };
 
 export default WorkoutPlanList;
+
